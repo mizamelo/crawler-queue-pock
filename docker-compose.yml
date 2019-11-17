@@ -3,10 +3,28 @@ version: '3'
 services:
   app:
     build: .
+    container_name: app
+    depends_on:
+      - redis
+      - database
     ports:
-      - "${PORT}:${PORT}"
+      - "${APP_PORT}:${APP_PORT}"
     command: yarn dev
+    links:
+      - redis
+  database:
+    image: mongo
+    container_name: database
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+    volumes:
+      - ./mongo-volume:/data/db
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
   redis:
     image: redis:alpine
-    ports:
-      - "${REDIS_PORT}:${REDIS_PORT}"
+    container_name: redis
+    expose:
+      - ${REDIS_PORT}

@@ -4,3 +4,4 @@ node_modules/
 # Others files
 nfce.xml
 /index.js
+mongo-volume
