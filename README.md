@@ -3,5 +3,5 @@
 Run
 
 ````bash
-$ cp .env-example .env && docker-compose up -d redis
+$ cp .env-example .env && docker-compose up -d
 ````
